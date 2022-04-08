@@ -2,12 +2,13 @@ package cihat.main.algorithm;
 
 /**
  * This class includes implementation of basic sorting algorithms for arrays that have comparable object.
- * NOTE: The array shouldn't have null elements (throws NullPointerException)
  * @author Cihat Gelir cihatgelir35@gmail.com
  */
 public class Sort {
+	
 	/**
-	 * Sorts the given array in ascending order.
+	 * Insertion Sorts the given array in ascending order.
+	 * NOTE: The array shouldn't have null elements (throws NullPointerException)
 	 * @param <E> element of array must be comparable with itself
 	 * @param arr array
 	 */
@@ -32,6 +33,60 @@ public class Sort {
 	}
 	
 	
+	/**
+	 * Quick Sorts the given array in ascending order.
+	 * NOTE: The array shouldn't have null elements (throws NullPointerException)
+	 * @param <E> element of array must be comparable with itself
+	 * @param arr array
+	 * @param low lowest index of array
+	 * @param high highest index of array (length - 1)
+	 */
+	public static <E extends Comparable<E>> void quickSort(E[] arr, int low , int high) {
+		if(arr == null) {
+			System.out.println("Null parameter !");
+			return;
+		}
+		if(low  < high) {
+			int pi = partition(arr,low,high); /* pi is partitioning index */
+			quickSort(arr,low,pi-1); /* left of the pivot */
+			quickSort(arr,pi+1,high);/* right of the pivot */
+		}
+	}
+	
+	/**
+	 * This function takes last element as pivot, places the pivot element at its correct position in sorted array, 
+	 * and places all smaller (smaller than pivot) to left of pivot and all greater elements to right of pivot.
+	 * @param <E> element of array must be comparable with itself
+	 * @param arr array
+	 * @param low lowest index of array
+	 * @param high highest index of array
+	 * @return
+	 */
+	private static <E extends Comparable<E>> int partition(E[]arr, int low, int high) {
+		E pivot = arr[high];
+		int i = low-1;
+		for (int j = low; j < high; j++) {
+			if (arr[j].compareTo(pivot) <= 0) {
+				i++;
+				swap(arr,i,j);
+			}
+		}
+		swap(arr,i+1,high);
+		return i+1;
+	}
+	
+	/**
+	 * This function switches arr[m] and arr[n]
+	 * @param <E>
+	 * @param arr arr
+	 * @param m index of one element to be switched
+	 * @param n index of other one element to be switched
+	 */
+	private static <E extends Comparable<E>> void swap(E[]arr, int m, int n) {
+		E temp = arr[m];
+		arr[m] = arr[n];
+		arr[n] = temp;
+	}
 
 
 }

@@ -1,35 +1,37 @@
 package cihat.main.algorithm;
 
-import java.util.List;
-
 /**
- * This class includes implementation of basic sorting algorithms for any object that implements list object.
- * NOTE: The list shouldn't have null elements (throws NullPointerException)
+ * This class includes implementation of basic sorting algorithms for arrays that have comparable object.
+ * NOTE: The array shouldn't have null elements (throws NullPointerException)
  * @author Cihat Gelir cihatgelir35@gmail.com
  */
 public class Sort {
 	/**
-	 * This method sorts the given list in ascending order.
-	 * @param <E> element of list must be comparable with itself
-	 * @param list collection
+	 * Sorts the given array in ascending order.
+	 * @param <E> element of array must be comparable with itself
+	 * @param arr array
 	 */
-	public static <E extends Comparable<E>> void insertionSort(List<E> list){
-		if (list == null) {
+	public static <E extends Comparable<E>> void insertionSort(E[] arr){
+		if (arr == null) {
 			System.out.println("Null parameter !");
 			return;
 		}
-		if (list.size() == 0) {
-			System.out.println("List is empty.");
+		if (arr.length == 0) {
+			System.out.println("Array is empty.");
 			return;
 		}
-		for (int i = 1; i < list.size(); i++) {
-			E key = list.get(i);
+		for (int i = 1; i < arr.length; i++) {
+			E key = arr[i];
 			int j = i-1;
-			while (j >= 0 && list.get(j).compareTo(key) > 0) {
-				list.set(j + 1, list.get(j));
+			while (j >= 0 && arr[j].compareTo(key)> 0) {
+				arr[j+1] = arr[j];
 				j = j-1;
 			}
-			list.set(j+1, key);
+			arr[j+1] = key;
 		}
 	}
+	
+	
+
+
 }

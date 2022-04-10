@@ -1,5 +1,7 @@
 package cihat.main.algorithm;
 
+import java.util.Arrays;
+
 /**
  * This class includes implementation of basic sorting algorithms for arrays that have comparable object.
  * @author Cihat Gelir cihatgelir35@gmail.com
@@ -8,7 +10,7 @@ public class Sort {
 	
 	/**
 	 * Insertion Sorts the given array in ascending order.
-	 * NOTE: The array shouldn't have null elements (throws NullPointerException)
+	 * NOTE: The array SHOULDN'T have null elements (throws NullPointerException)
 	 * @param <E> element of array must be comparable with itself
 	 * @param arr array
 	 */
@@ -35,7 +37,7 @@ public class Sort {
 	
 	/**
 	 * Quick Sorts the given array in ascending order.
-	 * NOTE: The array shouldn't have null elements (throws NullPointerException)
+	 * NOTE: The array SHOULDN'T have null elements (throws NullPointerException)
 	 * @param <E> element of array must be comparable with itself
 	 * @param arr array
 	 * @param low lowest index of array
@@ -88,5 +90,67 @@ public class Sort {
 		arr[n] = temp;
 	}
 
-
+	
+	/**
+	 * Merge Sorts the given array in ascending order
+	 * NOTE: The array SHOULDN'T have null elements (throws NullPointerException)
+	 * @param <E> element of array must be comparable with itself
+	 * @param arr array
+	 */
+	public static <E extends Comparable<E>> void mergeSort(E[] arr) {
+		if(arr == null) {
+			System.out.println("Null parameter !");
+			return;
+		}
+		int arrLength = arr.length;
+		if (arrLength < 2) {
+			return;
+		} 
+		int midIndex = arrLength / 2;
+		
+		E[] leftHalf = Arrays.copyOfRange(arr, 0, midIndex);
+		E[] rightHalf = Arrays.copyOfRange(arr, midIndex, arrLength);
+		
+		mergeSort(leftHalf);
+		mergeSort(rightHalf);
+		
+		merge(arr,leftHalf,rightHalf);
+	}
+	
+	/**
+	 * Merges 2 array
+	 * @param <E> element of array must be comparable with itself
+	 * @param arr array
+	 * @param leftHalf left half of the array w.r.t midIndex
+	 * @param rightHalf right half of the array w.r.t midIndex
+	 */
+	private static <E extends Comparable<E>> void merge(E[] arr,E[] leftHalf, E[] rightHalf) {
+		int leftSize = leftHalf.length;
+		int rightSize = rightHalf.length;
+		int i = 0, j = 0, k = 0;
+		
+		while (i < leftSize && j < rightSize) {
+			if(leftHalf[i].compareTo(rightHalf[j]) <= 0) {
+				arr[k] = leftHalf[i];
+				i++;
+			} else {
+				arr[k] = rightHalf[j];
+				j++;
+			}
+			k++;
+		}
+		
+		while (i < leftSize) {
+			arr[k] = leftHalf[i];
+			i++;
+			k++;
+		}
+		
+		while(j < rightSize) {
+			arr[k] = rightHalf[j];
+			j++;
+			k++;
+		}
+	}
+	
 }

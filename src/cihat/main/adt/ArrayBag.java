@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class ArrayBag<T> implements BagInterface<T>{
 	
 	private T[] bag;
-	public int numberOfEntries;
+	private int numberOfEntries;
 	private static final int DEFAULT_CAPACITY = 30;
 	private static final int MAX_CAPACITY = 10000;
 	

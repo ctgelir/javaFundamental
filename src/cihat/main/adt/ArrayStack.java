@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class ArrayStack<T> implements StackInterface<T>{
 	private T[] stack;
-	public int topIndex;
+	private int topIndex;
 	private static final int DEFAULT_CAPACITY = 50;
 	private static final int MAX_CAPACITY = 10000;
 	

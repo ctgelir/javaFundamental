@@ -31,7 +31,8 @@ public class ArrayQueue<T> implements QueueInterface<T> {
 	}
 	
 	/** Adds a new entry to the back of this queue.
-		@param newEntry An object to be added. */
+		@param newEntry An object to be added.
+		@throws IllegalStateException if newEntry is null. */
 	public void enqueue(T newEntry) {
 		if(newEntry == null)
 			throw new IllegalStateException("newEntry is null");

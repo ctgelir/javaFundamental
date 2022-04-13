@@ -2,7 +2,7 @@ package cihat.main.adt;
 
 import java.util.Arrays;
 /**
- * An interface that describes the operations of a queue of objects
+ * A class that implements a queue of objects by using an array.
  * @author Cihat Gelir cihatgelir35@gmail.com
  * 
  * Comments mainly taken from Data Structures and Abstractions with Java 4th Edition by Frank M. Carrano

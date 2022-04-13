@@ -80,7 +80,7 @@ public class ArrayStack<T> implements StackInterface<T>{
 	
 	/** Throws an exception if the client requests a capacity that exceeds limitations.*/
 	private void checkCapacity(int desiredCapacity) {
-		if (desiredCapacity > MAX_CAPACITY || desiredCapacity < 0) {
+		if (desiredCapacity > MAX_CAPACITY || desiredCapacity <= 0) {
 			throw new IllegalStateException("Attempt to create a bag" + 
 											"whose capacity exceeds limitations.");
 		}

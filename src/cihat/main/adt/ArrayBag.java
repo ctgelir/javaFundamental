@@ -52,13 +52,9 @@ public class ArrayBag<T> implements BagInterface<T>{
     	@exception IllegalStateException if newEntry is null. */
 	public void add(T newEntry) {
 		if (newEntry == null) {	throw new IllegalStateException("New Entry is null.");}
-		if (isArrayFull()) {
-			doubleCapacity();
-		} else {
-			bag[numberOfEntries] = newEntry;
-			numberOfEntries++;
-		}
-		
+		ensureCapacity();
+		bag[numberOfEntries] = newEntry;
+		numberOfEntries++;
 	}
 	
 	/** Removes one unspecified entry from this bag, if possible.
@@ -173,13 +169,15 @@ public class ArrayBag<T> implements BagInterface<T>{
 	}
 
 	/** tries to double capacity.*/
-	private void doubleCapacity() {
-		int newLength = 2 * bag.length;
-		if (newLength > MAX_CAPACITY) {
-			throw new IllegalStateException("Attempt to create a bag " + 
-					"whose capacity exceeds the limitation");
-		} else {
-			bag = Arrays.copyOf(bag, newLength);
+	private void ensureCapacity() {
+		if(isArrayFull()) {
+			int newLength = 2 * bag.length;
+			if (newLength > MAX_CAPACITY) {
+				throw new IllegalStateException("Attempt to create a bag " + 
+						"whose capacity exceeds the limitation");
+			} else {
+				bag = Arrays.copyOf(bag, newLength);
+			}
 		}
 	}	
 }

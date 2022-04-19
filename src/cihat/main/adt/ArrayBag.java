@@ -20,45 +20,36 @@ public class ArrayBag<T> implements BagInterface<T>{
 		this(DEFAULT_CAPACITY);
 	}
 	
+	
 	/** Creates an empty bag having a given initial capacity.
 	    @param capacity The desired integer capacity.
 	    @exception IllegalStateException if desiredCapacity exceeds limitations*/
 	public ArrayBag(int desiredCapacity) {
-		if (desiredCapacity <= MAX_CAPACITY && desiredCapacity > 0) {
-			@SuppressWarnings("unchecked")
-			T[] tempBag = (T[]) new Object[desiredCapacity];
-			bag = tempBag;
-			numberOfEntries = 0;
-		} else {
-			throw new IllegalStateException("Attempt to create a bag " + 
-											"whose capacity exceeds the limitation");
-		}
+		checkCapacity(desiredCapacity);
+		@SuppressWarnings("unchecked")
+		T[] tempBag = (T[]) new Object[desiredCapacity];
+		bag = tempBag;
+		numberOfEntries = 0;
 	}
 	
-	/** Gets the current number of entries in this bag.
-    	@return The integer number of entries currently in the bag.*/
-	public int getCurrentSize() {
-		return numberOfEntries;
-	}
+	
+	/**{@inheritDoc}*/
+	public int getCurrentSize() {	return numberOfEntries;}
 
-	/** Sees whether this bag is empty.
-    	@return True if the bag is empty, or false if not. */
-	public boolean isEmpty() {
-		return numberOfEntries == 0;
-	}
+	
+	/**{@inheritDoc}*/
+	public boolean isEmpty() {	return numberOfEntries == 0;}
 
-	/** Adds a new entry to this bag. If bag is full it doubles capacity.
-    	@param newEntry The object to be added as a new entry.
-    	@exception IllegalStateException if newEntry is null. */
+	
+	/**{@inheritDoc}*/
 	public void add(T newEntry) {
-		if (newEntry == null) {	throw new IllegalStateException("New Entry is null.");}
+		checkEntry(newEntry);
 		ensureCapacity();
 		bag[numberOfEntries] = newEntry;
 		numberOfEntries++;
 	}
 	
-	/** Removes one unspecified entry from this bag, if possible.
-		@return Either the removed entry, if the removal was successful, or null. */
+	/**{@inheritDoc}*/
 	public T remove() {
 		T result = null;
 		if (numberOfEntries > 0) {
@@ -70,12 +61,9 @@ public class ArrayBag<T> implements BagInterface<T>{
 	}
 
 	
-	/** Removes one occurrence of a given entry from this bag, if possible.
-		@param anEntry The entry to be removed.
-		@return True if the removal was successful, or false if not. */
-	@Override
+	/**{@inheritDoc}*/
 	public boolean remove(T anEntry) {
-		if (anEntry == null) {	throw new IllegalStateException("New Entry is null.");}
+		checkEntry(anEntry);
 		int index = getIndexOf(anEntry);
 		if(index >= 0) {
 			removeEntry(index);
@@ -84,20 +72,17 @@ public class ArrayBag<T> implements BagInterface<T>{
 		return false;
 	}
 
-	/** Removes all entries from this bag. */
+	
+	/**{@inheritDoc}*/
 	public void clear() {
-		while(!isEmpty()) {
-			remove();
-		}
-		
+		while(!isEmpty())
+			remove();		
 	}
 
-	/** Counts the number of times a given entry appears in this bag.
-		@param anEntry The entry to be counted.
-		@exception IllegalStateException if newEntry is null
-		@return The number of times anEntry appears in the bag. */
+	
+	/**{@inheritDoc}*/
 	public int getFrequencyOf(T anEntry) {
-		if(anEntry == null) {	throw new IllegalStateException("New Entry is null.");}
+		checkEntry(anEntry);
 		int counter = 0;
 		for (int index = 0; index < numberOfEntries; index++) {
 			if (anEntry.equals(bag[index])) {
@@ -108,28 +93,18 @@ public class ArrayBag<T> implements BagInterface<T>{
 	}
 
 	
-	/** Tests whether this bag contains a given entry.
-		@param anEntry The entry to locate.
-		@return True if the bag contains anEntry, or false if not. */
+	/**{@inheritDoc}*/
 	public boolean contains(T anEntry) {
-		if (anEntry == null) {
-			throw new IllegalStateException("New Entry is null.");
+		checkEntry(anEntry);
+		for(int index =0; index < numberOfEntries;index++) {
+			if (anEntry.equals(bag[index])) 
+				return true;
 		}
-		boolean found = false;
-		int index = 0;
-		while (!found && index < numberOfEntries) {
-			if (anEntry.equals(bag[index])) {
-				found = true;
-			}
-			index++;
-		}
-		return found;
+		return false;
 	}
 
 
-	/** Retrieves all entries that are in this bag.
-		@return A newly allocated array of all the entries in the bag.
-		Note: If the bag is empty, the returned array is empty. */
+	/**{@inheritDoc}*/
 	public T[] toArray() {
 		@SuppressWarnings("unchecked")
 		T[] result = (T[]) new Object[numberOfEntries];
@@ -140,44 +115,51 @@ public class ArrayBag<T> implements BagInterface<T>{
 	}
 	
 	
-	/** Returns true if the arraybag is full, or false if not */
-	private boolean isArrayFull() {
-		return numberOfEntries >= bag.length;
-	}
+	// Returns true if the arraybag is full, or false if not.
+	private boolean isFull() {	return numberOfEntries >= bag.length;}
 
-	/** Pre-Condition index >= 0 and index < numberOfEntries
-	    removes the entry at position: index
-	    @param index */
+	
+	// Pre-Condition index >= 0 and index < numberOfEntries
+	// Removes the entry at position: index
 	private void removeEntry(int index) {
 		bag[index] = bag[numberOfEntries-1];
 		bag[numberOfEntries-1] = null;
-		numberOfEntries--;
-		
+		numberOfEntries--;	
 	}
 
-	/**	Pre-Condition: anEntry is not null
-	   	@param anEntry 
-	   	returns index of anEntry if it is in the bag else, returns -1 */
+	
+	//  Pre-Condition: anEntry is not null
+	//  Returns the index of anEntry if it is in the bag else, returns -1 
 	private int getIndexOf(T anEntry) {
 		for (int index = 0; index < numberOfEntries; index++) {
-			if (anEntry.equals(bag[index])) {
+			if (anEntry.equals(bag[index]))
 				return index;
-			}
 		}
 		return -1;
-		
 	}
 
-	/** tries to double capacity.*/
+	
+	// Throws IllegalStateException if desiredCapacity exceeds limitation.
+	private void checkCapacity(int desiredCapacity) {
+		if (desiredCapacity > MAX_CAPACITY || desiredCapacity <= 0) {
+			throw new IllegalStateException("Attempt to create a bag " +
+										"whose capacity exceeds the limitations.");
+		}
+	}
+	
+	
+	// It doubles the capacity if bag is full.
 	private void ensureCapacity() {
-		if(isArrayFull()) {
+		if(isFull()) {
 			int newLength = 2 * bag.length;
-			if (newLength > MAX_CAPACITY) {
-				throw new IllegalStateException("Attempt to create a bag " + 
-						"whose capacity exceeds the limitation");
-			} else {
-				bag = Arrays.copyOf(bag, newLength);
-			}
+			bag = Arrays.copyOf(bag, newLength);
 		}
 	}	
+	
+	
+	// Throws IllegalStateException if anEntry is null.
+	private void checkEntry(T anEntry) {
+		if (anEntry == null) 
+			throw new IllegalStateException("New Entry is null.");
+	}
 }

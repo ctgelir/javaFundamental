@@ -7,6 +7,9 @@
 *.nar
 hs_err_pid*
 
+## Test files
+src/cihat/main/test/
+
 ## Eclipse
 .settings/
 bin/

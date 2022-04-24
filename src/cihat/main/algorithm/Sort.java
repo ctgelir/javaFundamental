@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * This class includes implementation of basic sorting algorithms for arrays that have comparable object.
- * @author Cihat Gelir cihatgelir35@gmail.com
+ * @author Cihat Gelir
  */
 public class Sort {
 	

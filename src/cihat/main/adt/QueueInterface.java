@@ -2,7 +2,7 @@ package cihat.main.adt;
 
 /**
  * An interface that describes the operations of a queue of objects
- * @author Cihat Gelir cihatgelir35@gmail.com
+ * @author Cihat Gelir
  * 
  * Comments taken from Data Structures and Abstractions with Java 4th Edition by Frank M. Carrano
  */

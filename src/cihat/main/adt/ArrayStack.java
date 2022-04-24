@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * A class of Stack whose entries are stored in a fixed-size array.
- * @author Cihat Gelir cihatgelir35@gmail.com
+ * @author Cihat Gelir
  *
  * Comments taken from Data Structures and Abstractions with Java 4th Edition by Frank M. Carrano
  */

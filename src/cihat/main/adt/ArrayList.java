@@ -6,7 +6,9 @@ import java.util.Arrays;
     Entries in a list have positions that begin with 1.
     Duplicate entries are allowed.
     Null entries are are allowed.
-    @author Cihat Gelir cihatgelir35@gmail.com
+    
+    @author Cihat Gelir
+    
     Comments taken from Data Structures and Abstractions with Java 4th Edition by Frank M. Carrano.*/
 public class ArrayList<T> implements ListInterface<T> {
     private T[] list;
